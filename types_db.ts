@@ -78,29 +78,32 @@ export type Database = {
       }
       news: {
         Row: {
+          analyze: Json | null
           created_at: string
           date: string
+          description: string | null
           id: string
           published_at: string | null
-          summary: string | null
           title: string
           url: string
         }
         Insert: {
+          analyze?: Json | null
           created_at?: string
           date: string
+          description?: string | null
           id?: string
           published_at?: string | null
-          summary?: string | null
           title: string
           url: string
         }
         Update: {
+          analyze?: Json | null
           created_at?: string
           date?: string
+          description?: string | null
           id?: string
           published_at?: string | null
-          summary?: string | null
           title?: string
           url?: string
         }
