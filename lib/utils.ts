@@ -102,3 +102,29 @@ export function turnDateFormat(date: string): string {
   const monthAbbr = monthNames[parseInt(month) - 1];
   return `${monthAbbr}-${day} ${year}`;
 }
+
+export function turnISODateToNature(isoString: string): string {
+  const date = new Date(isoString);
+
+  const options: Intl.DateTimeFormatOptions = {
+    timeZone: "America/New_York",
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true,
+  };
+
+  return new Intl.DateTimeFormat("en-US", options).format(date);
+}
+
+export interface Analyze {
+  summary: string;
+  forecasts: {
+    symbol: string;
+    analyze: string;
+    direction: "positive" | "negative" | "neutral";
+  }[];
+  has_article: boolean;
+}

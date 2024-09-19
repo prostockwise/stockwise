@@ -1,8 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { turnDateFormat } from "@/lib/utils";
 
-export const revalidate = 60;
-
 // fetch all news of specific date
 export async function GET(
   req: Request,
@@ -18,5 +16,6 @@ export async function GET(
     .eq("date", date)
     .order("created_at", { ascending: false });
   if (error) throw new Error(`fetch news failed: ${error.message}`);
+  console.log(`fetch news date: ${params.date}, num: ${data.length}`);
   return Response.json(data);
 }
