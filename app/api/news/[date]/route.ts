@@ -4,7 +4,10 @@ import { turnDateFormat } from "@/lib/utils";
 export const revalidate = 60;
 
 // fetch all news of specific date
-export async function GET({ params }: { params: { date: string } }) {
+export async function GET(
+  req: Request,
+  { params }: { params: { date: string } },
+) {
   // turn `2024-09-17` to `Sep-17 2024`
   const date = turnDateFormat(params.date);
   const supabase = createClient();
