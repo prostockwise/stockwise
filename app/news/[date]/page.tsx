@@ -8,11 +8,11 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import {
+  ArrowDownCircle,
   ArrowUpCircle,
   Calendar,
   ChevronLeft,
   ChevronRight,
-  ArrowDownCircle,
   MinusCircle,
 } from "lucide-react";
 import Link from "next/link";
@@ -149,8 +149,7 @@ export default async function NewsPage({
                 <CardContent className="flex-grow">
                   <p className="line-clamp-6">{article.description}</p>
                 </CardContent>
-                <CardFooter className="flex flex-col items-start">
-                  <Button variant="link">Read more</Button>
+                <CardFooter className="flex justify-between items-end">
                   <div className="flex flex-wrap gap-2">
                     {(article.analyze as any as Analyze).has_article &&
                       (article.analyze as any as Analyze).forecasts.map(
@@ -166,6 +165,9 @@ export default async function NewsPage({
                         ),
                       )}
                   </div>
+                  <Link href={`/news/detail/${article.id}`}>
+                    <Button variant="link">Read more</Button>
+                  </Link>
                 </CardFooter>
               </Card>
             ))}
