@@ -18,11 +18,34 @@ import { Tables } from "@/types_db";
 import { Analyze, RelativeNews } from "@/lib/types";
 import SentimentIcon from "@/components/sentimenticon";
 import NewsCard from "@/components/newscard";
+import { Metadata } from "next";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { inner_url: string };
+}): Promise<Metadata> {
+  // fetch news
+  const resp = await fetch(getURL(`/api/news/detail/${params.inner_url}`));
+  const news: Tables<"news"> = await resp.json();
+  const url = getURL(`/news/detail/${params.inner_url}`);
+  return {
+    title: `${news.title} | Stockwise News`,
+    description: news.description,
+    alternates: {
+      canonical: url,
+    },
+  };
+}
 
 async function Navbar() {
   return (
     <header className="px-4 lg:px-6 h-14 flex items-center border-b">
-      <Link className="flex items-center justify-center" href="/news">
+      <Link
+        className="flex items-center justify-center"
+        href="/news"
+        prefetch={false}
+      >
         <ChevronLeft className="h-6 w-6 mr-2" />
         <span className="text-lg font-bold">Back to News</span>
       </Link>
@@ -33,7 +56,7 @@ async function Navbar() {
 export default async function NewsDetailPage({
   params,
 }: {
-  params: { date: string; inner_url: string };
+  params: { inner_url: string };
 }) {
   // fetch news
   const resp = await fetch(getURL(`/api/news/detail/${params.inner_url}`));

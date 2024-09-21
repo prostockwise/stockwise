@@ -17,6 +17,20 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { Input } from "@/components/ui/input";
+import { Metadata } from "next";
+import { getURL } from "@/lib/utils";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const url = getURL("/features");
+  return {
+    title: "Features | Stockwise",
+    description:
+      "Explorer Stockwise Features: Get real-time news updates, advanced stock screening, portfolio building tools, and custom alerts.",
+    alternates: {
+      canonical: url,
+    },
+  };
+}
 
 export default function FeaturesPage() {
   return (

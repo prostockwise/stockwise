@@ -9,8 +9,22 @@ import {
 import { ChartBar, Linkedin, Mail, Twitter } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { Metadata } from "next";
+import { getURL } from "@/lib/utils";
 
-function Header() {
+export async function generateMetadata(): Promise<Metadata> {
+  const url = getURL("/about");
+  return {
+    title: "About | Stockwise",
+    description:
+      "Discover Stockwise, your next-generation market analysis partner. Empowering investors with AI-driven tools and insights for smarter stock market decisions. Join us in democratizing financial intelligence today!",
+    alternates: {
+      canonical: url,
+    },
+  };
+}
+
+function Navbar() {
   return (
     <header className="px-4 lg:px-6 h-14 flex items-center border-b">
       <Link
@@ -119,7 +133,7 @@ function OurTeam() {
 export default function AboutPage() {
   return (
     <div className="flex flex-col min-h-screen">
-      <Header />
+      <Navbar />
       <main className="flex-1">
         <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48 bg-gray-100 dark:bg-gray-800">
           <div className="container px-4 md:px-6">

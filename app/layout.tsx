@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
 import Footer from "@/components/footer";
+import { getURL } from "@/lib/utils";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,6 +20,9 @@ export async function generateMetadata(): Promise<Metadata> {
     robots: "follow, index",
     icons: { icon: "/favicon.ico" },
     metadataBase: new URL(url),
+    alternates: {
+      canonical: url,
+    },
     verification: {
       google: "Ai05ftwW2pwa4nA_B_BKPHbAex6x9dNU9RRLoNCOkpU",
     },

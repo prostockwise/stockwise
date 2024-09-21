@@ -7,11 +7,33 @@ import { Tables } from "@/types_db";
 import { redirect } from "next/navigation";
 import NewsCard from "@/components/newscard";
 import { Analyze } from "@/lib/types";
+import { Metadata } from "next";
+
+export const revalidate = 60;
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { date: string };
+}): Promise<Metadata> {
+  const url = getURL(`/news/${params.date}`);
+  return {
+    title: `${params.date} | Stockwise News`,
+    description: `Explorer Stockwise News on ${params.date}`,
+    alternates: {
+      canonical: url,
+    },
+  };
+}
 
 async function Navbar() {
   return (
     <header className="px-4 lg:px-6 h-14 flex items-center border-b">
-      <Link className="flex items-center justify-center" href="/news">
+      <Link
+        className="flex items-center justify-center"
+        href="/news"
+        prefetch={false}
+      >
         <Calendar className="h-6 w-6" />
         <span className="ml-2 text-lg font-bold">Stockwise News</span>
       </Link>
@@ -19,6 +41,7 @@ async function Navbar() {
         <Link
           className="text-sm font-medium hover:underline underline-offset-4"
           href="/"
+          prefetch={false}
         >
           Home
         </Link>
