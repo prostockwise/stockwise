@@ -3,12 +3,14 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowRight, Bell, ChartBar, Filter } from "lucide-react";
 import Wishlist from "@/components/wishlist";
-import { getURL, todayDate } from "@/lib/utils";
+import { getURL } from "@/lib/utils";
 import { Tables } from "@/types_db";
 import NewsCard from "@/components/newscard";
 import { Analyze } from "@/lib/types";
 
-export async function Navbar() {
+export const revalidate = 60;
+
+async function Navbar() {
   return (
     <header className="px-4 lg:px-6 h-14 flex items-center">
       <Link className="flex items-center justify-center" href="/">
