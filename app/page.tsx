@@ -3,8 +3,10 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowRight, Bell, ChartBar, Filter } from "lucide-react";
 import Wishlist from "@/components/wishlist";
-import { getURL } from "@/lib/utils";
+import { getURL, todayDate } from "@/lib/utils";
 import { Tables } from "@/types_db";
+import NewsCard from "@/components/newscard";
+import { Analyze } from "@/lib/types";
 
 export async function Navbar() {
   return (
@@ -67,7 +69,7 @@ async function TitleAndDescription() {
 
 async function News() {
   const resp = await fetch(getURL(`/api/news?limit=3`));
-  const news: Tables<"news">[] = await resp.json();
+  const newsList: Tables<"news">[] = await resp.json();
   return (
     <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-gray-800">
       <div className="container px-4 md:px-6">
@@ -75,19 +77,20 @@ async function News() {
           Latest Market News
         </h2>
         <div className="grid gap-6 lg:grid-cols-3 mb-8">
-          {news.map((article) => (
-            <Card key={article.id}>
-              <CardHeader>
-                <CardTitle className="line-clamp-2">{article.title}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="line-clamp-6">{article.description}</p>
-              </CardContent>
-            </Card>
+          {newsList.map((news, index) => (
+            <NewsCard
+              key={index}
+              news={news}
+              forecasts={
+                news.analyze == null
+                  ? []
+                  : (news.analyze as any as Analyze).forecasts
+              }
+            />
           ))}
         </div>
         <div className="flex justify-center">
-          <Link href="/news" prefetch={false}>
+          <Link href="/news">
             <Button size="lg" className="font-semibold">
               Explore More News
               <ArrowRight className="ml-2 h-4 w-4" />

@@ -1,32 +1,12 @@
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import {
-  ArrowDownCircle,
-  ArrowUpCircle,
-  Calendar,
-  ChevronLeft,
-  ChevronRight,
-  MinusCircle,
-} from "lucide-react";
+
+import { Calendar, ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
-import {
-  Analyze,
-  getURL,
-  nextDate,
-  prevDate,
-  todayDate,
-  turnISODateToNature,
-} from "@/lib/utils";
+import { getURL, nextDate, prevDate, todayDate } from "@/lib/utils";
 import { Tables } from "@/types_db";
 import { redirect } from "next/navigation";
-import { Badge } from "@/components/ui/badge";
+import NewsCard from "@/components/newscard";
+import { Analyze } from "@/lib/types";
 
 async function Navbar() {
   return (
@@ -92,17 +72,6 @@ async function NextDayButton({ date }: { date: string }) {
   );
 }
 
-const getSymbolSentimentIcon = (sentiment: string) => {
-  switch (sentiment) {
-    case "positive":
-      return <ArrowUpCircle className="h-4 w-4 text-green-500" />;
-    case "negative":
-      return <ArrowDownCircle className="h-4 w-4 text-red-500" />;
-    default:
-      return <MinusCircle className="h-4 w-4 text-gray-500" />;
-  }
-};
-
 export default async function NewsPage({
   params,
 }: {
@@ -110,7 +79,7 @@ export default async function NewsPage({
 }) {
   // fetch news data
   const resp = await fetch(getURL(`/api/news/${params.date}`));
-  const news: Tables<"news">[] = await resp.json();
+  const newsList: Tables<"news">[] = await resp.json();
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -131,45 +100,16 @@ export default async function NewsPage({
             <NextDayButton date={params.date} />
           </div>
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {news.map((article) => (
-              <Card
-                key={article.id}
-                className="bg-background hover:bg-gray-900 flex flex-col"
-              >
-                <CardHeader>
-                  <CardTitle className="line-clamp-2">
-                    {article.title}
-                  </CardTitle>
-                  <CardDescription>
-                    {article.published_at != null
-                      ? turnISODateToNature(article.published_at)
-                      : ""}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="flex-grow">
-                  <p className="line-clamp-6">{article.description}</p>
-                </CardContent>
-                <CardFooter className="flex justify-between items-end">
-                  <div className="flex flex-wrap gap-2">
-                    {(article.analyze as any as Analyze).has_article &&
-                      (article.analyze as any as Analyze).forecasts.map(
-                        (forecast, index) => (
-                          <Badge
-                            key={index}
-                            variant="secondary"
-                            className="flex items-center gap-1"
-                          >
-                            {forecast.symbol}
-                            {getSymbolSentimentIcon(forecast.direction)}
-                          </Badge>
-                        ),
-                      )}
-                  </div>
-                  <Link href={`/news/detail/${article.id}`}>
-                    <Button variant="link">Read more</Button>
-                  </Link>
-                </CardFooter>
-              </Card>
+            {newsList.map((news) => (
+              <NewsCard
+                key={news.id}
+                news={news}
+                forecasts={
+                  news.analyze == null
+                    ? []
+                    : (news.analyze as any as Analyze).forecasts
+                }
+              />
             ))}
           </div>
         </div>

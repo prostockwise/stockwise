@@ -1,3 +1,4 @@
+
 export type Json =
   | string
   | number
@@ -83,7 +84,10 @@ export type Database = {
           date: string
           description: string | null
           id: string
+          inner_url: string
           published_at: string | null
+          relative_news: Json | null
+          symbols: string[] | null
           title: string
           url: string
         }
@@ -93,7 +97,10 @@ export type Database = {
           date: string
           description?: string | null
           id?: string
+          inner_url: string
           published_at?: string | null
+          relative_news?: Json | null
+          symbols?: string[] | null
           title: string
           url: string
         }
@@ -103,7 +110,10 @@ export type Database = {
           date?: string
           description?: string | null
           id?: string
+          inner_url?: string
           published_at?: string | null
+          relative_news?: Json | null
+          symbols?: string[] | null
           title?: string
           url?: string
         }

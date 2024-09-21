@@ -118,13 +118,3 @@ export function turnISODateToNature(isoString: string): string {
 
   return new Intl.DateTimeFormat("en-US", options).format(date);
 }
-
-export interface Analyze {
-  summary: string;
-  forecasts: {
-    symbol: string;
-    analyze: string;
-    direction: "positive" | "negative" | "neutral";
-  }[];
-  has_article: boolean;
-}
