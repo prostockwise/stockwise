@@ -183,7 +183,7 @@ export default async function Home() {
       <Navbar />
       <main className="flex-1">
         <TitleAndDescription />
-        <News />
+        {/*<News />*/}
         <Features />
         <WishList />
       </main>
