@@ -6,11 +6,24 @@ import Footer from "@/components/footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata: Metadata = {
-  title: "Stockwise | Next-Generation Market Analysis Partner",
-  description:
-    "Stockwise: Your AI-powered market analysis partner. Our platform blends advanced AI with user-friendly interfaces for real-time updates, in-depth analysis, and accurate forecasts. From novice to expert, make informed decisions effortlessly.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const url = getURL();
+  return {
+    title: "Stockwise | Next-Generation Market Analysis Partner",
+    description:
+      "Stockwise: Your AI-powered market analysis partner. Get real-time news updates, advanced stock screening, portfolio building tools, and custom alerts. Make smarter investment decisions with our next-generation platform.",
+    referrer: "origin-when-cross-origin",
+    authors: [{ name: "Hantian Pang", url: "https://github.com/ppaanngggg" }],
+    creator: "Hantian Pang",
+    publisher: "Hantian Pang",
+    robots: "follow, index",
+    icons: { icon: "/favicon.ico" },
+    metadataBase: new URL(url),
+    verification: {
+      google: "Ai05ftwW2pwa4nA_B_BKPHbAex6x9dNU9RRLoNCOkpU",
+    },
+  };
+}
 
 export default function RootLayout({
   children,
