@@ -77,9 +77,11 @@ export default async function NewsDetailPage({
             <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl mb-4">
               {news.title}
             </h1>
-            <p className="text-xl text-gray-500 mb-4">
-              Published At: {turnISODateToNature(news.date)}
-            </p>
+            {news.published_at && (
+              <p className="text-xl text-gray-500 mb-4">
+                Published On {turnISODateToNature(news.published_at)}
+              </p>
+            )}
             {analyze && <p className="text-xl mb-6">{analyze.summary}</p>}
 
             <Link
