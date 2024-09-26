@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "next-themes";
 import Footer from "@/components/footer";
 import { getURL } from "@/lib/utils";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -42,6 +43,7 @@ export default function RootLayout({
         </ThemeProvider>
         <Footer />
       </body>
+      <GoogleAnalytics gaId="G-5MKQS5YTEK" />
     </html>
   );
 }
