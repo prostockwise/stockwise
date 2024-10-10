@@ -82,27 +82,6 @@ export function nextDate(date: string): string {
   return `${year}-${month}-${day}`;
 }
 
-// turn `2024-09-17` to `Sep-17 2024`
-export function turnDateFormat(date: string): string {
-  const [year, month, day] = date.split("-");
-  const monthNames = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
-  ];
-  const monthAbbr = monthNames[parseInt(month) - 1];
-  return `${monthAbbr}-${day} ${year}`;
-}
-
 export function turnISODateToNature(isoString: string): string {
   const date = new Date(isoString);
 
