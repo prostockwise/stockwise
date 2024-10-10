@@ -33,11 +33,7 @@ export default async function NewsCard({
     <Card className="bg-background hover:bg-gray-900 flex flex-col">
       <CardHeader>
         <CardTitle className="hover:underline">
-          <Link
-            href={`/news/detail/${news.inner_url}`}
-            prefetch={false}
-            target="_blank"
-          >
+          <Link href={`/news/detail/${news.inner_url}`} prefetch={false}>
             {news.title}
           </Link>
         </CardTitle>
@@ -66,11 +62,7 @@ export default async function NewsCard({
               </Badge>
             ))}
         </div>
-        <Link
-          href={`/news/detail/${news.inner_url}`}
-          prefetch={false}
-          target="_blank"
-        >
+        <Link href={`/news/detail/${news.inner_url}`} prefetch={false}>
           <Button variant="link">Read more</Button>
         </Link>
       </CardFooter>
