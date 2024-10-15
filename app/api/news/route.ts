@@ -1,6 +1,8 @@
 import { createClient } from "@/lib/supabase/server";
 import { NextRequest } from "next/server";
 
+export const revalidate = 60;
+
 // fetch latest limit news
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;

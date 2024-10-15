@@ -20,6 +20,19 @@ import SentimentIcon from "@/components/sentimenticon";
 import NewsCard from "@/components/newscard";
 import { Metadata } from "next";
 
+function encodeOgParams(
+  title: string,
+  forecasts: {
+    symbol: string;
+    direction: "positive" | "neutral" | "negative";
+  }[],
+) {
+  const jsonString = JSON.stringify(forecasts);
+  return `?title=${encodeURIComponent(title)}&forecasts=${encodeURIComponent(
+    jsonString,
+  )}`;
+}
+
 export async function generateMetadata({
   params,
 }: {
@@ -29,11 +42,38 @@ export async function generateMetadata({
   const resp = await fetch(getURL(`/api/news/detail/${params.inner_url}`));
   const news: Tables<"news"> = await resp.json();
   const url = getURL(`/news/detail/${params.inner_url}`);
+  const title = `${news.title} | Stockwise News`;
+  const description = news.description ? news.description : "";
+  const analyze: Analyze | null =
+    news.analyze != null ? (news.analyze as any as Analyze) : null;
+  const forecasts: {
+    symbol: string;
+    direction: "positive" | "neutral" | "negative";
+  }[] =
+    analyze?.forecasts?.map((f) => ({
+      symbol: f.symbol,
+      direction: f.direction,
+    })) ?? [];
+  const ogImage = getURL("/og" + encodeOgParams(news.title, forecasts));
   return {
-    title: `${news.title} | Stockwise News`,
-    description: news.description,
+    title: title,
+    description: description,
     alternates: {
       canonical: url,
+    },
+    openGraph: {
+      type: "website",
+      title: title,
+      description: description,
+      emails: "prostockwise@gmail.com",
+      siteName: "Stockwise",
+      images: [ogImage],
+      url: url,
+    },
+    twitter: {
+      card: "summary_large_image",
+      site: "@stockwiswpro",
+      creator: "@HantianPang",
     },
   };
 }
@@ -97,7 +137,7 @@ export default async function NewsDetailPage({
               href={news.url}
               target="_blank"
               rel="nofollow noopener noreferrer"
-              className="inline-flex items-center text-blue-600 hover:underline"
+              className="inline-flex items-center text-blue-500 hover:underline"
             >
               Read full article
               <ExternalLink className="ml-2 h-4 w-4" />
@@ -124,7 +164,7 @@ export default async function NewsDetailPage({
                           <Link
                             href={`https://www.tradingview.com/chart/?symbol=${forecast.symbol}`}
                             target="_blank"
-                            rel="noopener noreferrer"
+                            rel="nofollow noopener noreferrer"
                             className="text-blue-500 hover:text-blue-600 transition-colors"
                           >
                             <BarChart2 className="h-4 w-4" />

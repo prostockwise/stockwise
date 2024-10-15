@@ -1,14 +1,13 @@
 import { ImageResponse } from "@vercel/og";
 import { NextRequest } from "next/server";
+import { getURL } from "@/lib/utils";
 
 export async function GET(req: NextRequest) {
-  console.log(req);
   const { searchParams } = new URL(req.url);
-  console.log(searchParams);
   const title = searchParams.get("title") || "Breaking Stock News";
   const forecasts: {
     symbol: string;
-    sentiment: "positive" | "neutral" | "negative";
+    direction: "positive" | "neutral" | "negative";
   }[] = JSON.parse(searchParams.get("forecasts") || "[]");
 
   return new ImageResponse(
@@ -22,7 +21,6 @@ export async function GET(req: NextRequest) {
           alignItems: "center",
           justifyContent: "center",
           backgroundColor: "#1e293b",
-          fontFamily: "Inter, sans-serif",
         }}
       >
         <div
@@ -33,8 +31,9 @@ export async function GET(req: NextRequest) {
             justifyContent: "center",
             backgroundColor: "#0f172a",
             borderRadius: "16px",
-            padding: "40px",
-            margin: "40px",
+            padding: "20px",
+            width: "1100px",
+            height: "530px",
             boxShadow:
               "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
           }}
@@ -44,28 +43,20 @@ export async function GET(req: NextRequest) {
             style={{
               display: "flex",
               alignItems: "center",
-              marginBottom: "24px",
+              marginBottom: "16px",
             }}
           >
-            <svg
+            <img
+              src={getURL("/icon.png")}
+              alt="Stockwise Logo"
               width="48"
               height="48"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="#4ade80"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M12 20V10" />
-              <path d="M18 20V4" />
-              <path d="M6 20v-4" />
-            </svg>
+            />
             <div
               style={{
                 marginLeft: "16px",
                 color: "#f8fafc",
-                fontSize: "24px",
+                fontSize: "32px",
                 fontWeight: "bold",
               }}
             >
@@ -73,20 +64,28 @@ export async function GET(req: NextRequest) {
             </div>
           </div>
           <div
-            style={{ color: "#94a3b8", fontSize: "16px", marginBottom: "32px" }}
+            style={{
+              color: "#94a3b8",
+              fontSize: "16px",
+            }}
           >
-            AI-Powered Stock Insights
+            Your ultimate AI-powered investing assistant
           </div>
 
           {/* News Title */}
           <div
             style={{
+              display: "block",
               color: "#f8fafc",
               fontSize: "32px",
               fontWeight: "bold",
               textAlign: "center",
-              marginBottom: "32px",
-              maxWidth: "800px",
+              marginTop: "40px",
+              marginBottom: "30px",
+              width: "900px",
+              height: "120px",
+              lineClamp: 2,
+              justifyContent: "center",
             }}
           >
             {title}
@@ -96,7 +95,7 @@ export async function GET(req: NextRequest) {
           <div
             style={{ display: "flex", justifyContent: "center", gap: "24px" }}
           >
-            {forecasts.slice(0, 3).map((forecast, index) => (
+            {forecasts.slice(0, 6).map((forecast, index) => (
               <div
                 key={index}
                 style={{
@@ -120,17 +119,17 @@ export async function GET(req: NextRequest) {
                 <div
                   style={{
                     color:
-                      forecast.sentiment === "positive"
+                      forecast.direction === "positive"
                         ? "#4ade80"
-                        : forecast.sentiment === "negative"
+                        : forecast.direction === "negative"
                           ? "#ef4444"
                           : "#94a3b8",
                     fontSize: "18px",
                     marginTop: "8px",
                   }}
                 >
-                  {forecast.sentiment.charAt(0).toUpperCase() +
-                    forecast.sentiment.slice(1)}
+                  {forecast.direction.charAt(0).toUpperCase() +
+                    forecast.direction.slice(1)}
                 </div>
               </div>
             ))}

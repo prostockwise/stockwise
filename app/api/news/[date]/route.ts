@@ -1,5 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 
+export const revalidate = 60;
+
 // fetch all news of specific date
 export async function GET(
   req: Request,
