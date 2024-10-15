@@ -33,12 +33,43 @@ function encodeOgParams(
   )}`;
 }
 
+function formatDescriptionWithForecasts(
+  description: string,
+  forecasts: {
+    symbol: string;
+    direction: "positive" | "neutral" | "negative";
+  }[],
+) {
+  if (description.length === 0 || forecasts.length === 0) {
+    return description;
+  }
+
+  const directionChar = (
+    direction: "positive" | "neutral" | "negative",
+  ): string => {
+    switch (direction) {
+      case "positive":
+        return "▲";
+      case "negative":
+        return "▼";
+      case "neutral":
+        return "■";
+    }
+  };
+
+  const forecastString = forecasts
+    .map((f) => `${directionChar(f.direction)}${f.symbol}`)
+    .join("  ");
+
+  return `${forecastString} | ${description}`;
+}
+
 export async function generateMetadata({
   params,
 }: {
   params: { inner_url: string };
 }): Promise<Metadata> {
-  // fetch news
+  // fetch news data and parse it
   const resp = await fetch(getURL(`/api/news/detail/${params.inner_url}`));
   const news: Tables<"news"> = await resp.json();
   const url = getURL(`/news/detail/${params.inner_url}`);
@@ -54,10 +85,11 @@ export async function generateMetadata({
       symbol: f.symbol,
       direction: f.direction,
     })) ?? [];
+  // build og image url
   const ogImage = getURL("/og" + encodeOgParams(news.title, forecasts));
   return {
     title: title,
-    description: description,
+    description: formatDescriptionWithForecasts(description, forecasts),
     alternates: {
       canonical: url,
     },
