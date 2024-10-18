@@ -3,6 +3,7 @@ import {
   BarChart2,
   ChevronLeft,
   ExternalLink,
+  Twitter,
 } from "lucide-react";
 import {
   Card,
@@ -22,15 +23,16 @@ import { Metadata } from "next";
 
 function encodeOgParams(
   title: string,
+  publishedAt: string,
   forecasts: {
     symbol: string;
     direction: "positive" | "neutral" | "negative";
   }[],
 ) {
   const jsonString = JSON.stringify(forecasts);
-  return `?title=${encodeURIComponent(title)}&forecasts=${encodeURIComponent(
-    jsonString,
-  )}`;
+  return `?title=${encodeURIComponent(title)}
+  &publishedAt=${encodeURIComponent(publishedAt)}
+  &forecasts=${encodeURIComponent(jsonString)}`;
 }
 
 function formatDescriptionWithForecasts(
@@ -85,8 +87,13 @@ export async function generateMetadata({
       symbol: f.symbol,
       direction: f.direction,
     })) ?? [];
+  const publishedAt: string = news.published_at
+    ? turnISODateToNature(news.published_at)
+    : "";
   // build og image url
-  const ogImage = getURL("/og" + encodeOgParams(news.title, forecasts));
+  const ogImage = getURL(
+    "/og" + encodeOgParams(news.title, publishedAt, forecasts),
+  );
   return {
     title: title,
     description: formatDescriptionWithForecasts(description, forecasts),
@@ -149,6 +156,15 @@ export default async function NewsDetailPage({
       ? (news.relative_news as any as RelativeNews[])
       : null;
 
+  // tweet = title + $symbol in forecast + \n\n + url
+  const url = getURL(`/news/detail/${news.inner_url}`);
+  let tweet = news.title;
+  if (analyze && analyze.forecasts) {
+    tweet += ` ${analyze.forecasts.map((f) => "$" + `${f.symbol}`).join(" ")}`;
+  }
+  tweet += `\n\n${url}`;
+  console.log(tweet);
+
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar date={news.date} />
@@ -165,15 +181,25 @@ export default async function NewsDetailPage({
             )}
             {analyze && <p className="text-xl mb-6">{analyze.summary}</p>}
 
-            <Link
-              href={news.url}
-              target="_blank"
-              rel="nofollow noopener noreferrer"
-              className="inline-flex items-center text-blue-500 hover:underline"
-            >
-              Read full article
-              <ExternalLink className="ml-2 h-4 w-4" />
-            </Link>
+            <div className="flex items-center justify-between">
+              <Link
+                href={news.url}
+                target="_blank"
+                rel="nofollow noopener noreferrer"
+                className="inline-flex items-center text-blue-400 hover:underline"
+              >
+                Read full article
+                <ExternalLink className="ml-2 h-4 w-4" />
+              </Link>
+              <Link
+                href={`https://x.com/intent/post?text=${encodeURIComponent(tweet)}`}
+                target="_blank"
+                rel="nofollow noopener noreferrer"
+                className="inline-flex items-center text-blue-400"
+              >
+                <Twitter />
+              </Link>
+            </div>
           </article>
 
           <section className="max-w-3xl mx-auto mt-12">
@@ -193,6 +219,7 @@ export default async function NewsDetailPage({
                       <CardTitle className="flex items-center justify-between">
                         <div className="flex items-center space-x-2">
                           <span>{forecast.symbol}</span>
+                          {/*link to tradingview*/}
                           <Link
                             href={`https://www.tradingview.com/chart/?symbol=${forecast.symbol}`}
                             target="_blank"

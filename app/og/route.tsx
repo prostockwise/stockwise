@@ -9,6 +9,7 @@ export async function GET(req: NextRequest) {
     symbol: string;
     direction: "positive" | "neutral" | "negative";
   }[] = JSON.parse(searchParams.get("forecasts") || "[]");
+  const publishedAt = searchParams.get("publishedAt") || "";
 
   return new ImageResponse(
     (
@@ -31,7 +32,6 @@ export async function GET(req: NextRequest) {
             justifyContent: "center",
             backgroundColor: "#0f172a",
             borderRadius: "16px",
-            padding: "20px",
             width: "1100px",
             height: "530px",
             boxShadow:
@@ -43,7 +43,7 @@ export async function GET(req: NextRequest) {
             style={{
               display: "flex",
               alignItems: "center",
-              marginBottom: "16px",
+              marginBottom: "14px",
             }}
           >
             <img
@@ -66,23 +66,32 @@ export async function GET(req: NextRequest) {
           <div
             style={{
               color: "#94a3b8",
-              fontSize: "16px",
+              fontSize: "18px",
             }}
           >
             Your ultimate AI-powered investing assistant
           </div>
+
+          {/*add a divider line*/}
+          <div
+            style={{
+              width: "100%",
+              height: "1px",
+              backgroundColor: "#334155",
+              marginTop: "20px",
+            }}
+          ></div>
 
           {/* News Title */}
           <div
             style={{
               display: "block",
               color: "#f8fafc",
-              fontSize: "32px",
+              fontSize: "42px",
               fontWeight: "bold",
               textAlign: "center",
-              marginTop: "40px",
-              marginBottom: "30px",
-              width: "900px",
+              marginTop: "30px",
+              width: "800px",
               height: "120px",
               lineClamp: 2,
               justifyContent: "center",
@@ -91,9 +100,25 @@ export async function GET(req: NextRequest) {
             {title}
           </div>
 
+          {/*publishedAt*/}
+          <div
+            style={{
+              color: "#94a3b8",
+              fontSize: "18px",
+            }}
+          >
+            {publishedAt}
+          </div>
+
           {/* Forecasts */}
           <div
-            style={{ display: "flex", justifyContent: "center", gap: "24px" }}
+            style={{
+              display: "flex",
+              marginTop: "30px",
+              justifyContent: "center",
+              gap: "24px",
+              height: "120px",
+            }}
           >
             {forecasts.slice(0, 6).map((forecast, index) => (
               <div
@@ -110,7 +135,7 @@ export async function GET(req: NextRequest) {
                 <div
                   style={{
                     color: "#f8fafc",
-                    fontSize: "24px",
+                    fontSize: "32px",
                     fontWeight: "bold",
                   }}
                 >
@@ -124,7 +149,7 @@ export async function GET(req: NextRequest) {
                         : forecast.direction === "negative"
                           ? "#ef4444"
                           : "#94a3b8",
-                    fontSize: "18px",
+                    fontSize: "24px",
                     marginTop: "8px",
                   }}
                 >
