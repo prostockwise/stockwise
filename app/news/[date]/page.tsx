@@ -19,7 +19,7 @@ export async function generateMetadata({
   const url = getURL(`/news/${params.date}`);
   return {
     title: `${params.date} | Stockwise News`,
-    description: `Explorer Stockwise News on ${params.date}`,
+    description: `Stock News on ${params.date}. Dive into real-time stock market updates with Stockwise News Explorer.`,
     alternates: {
       canonical: url,
     },
@@ -35,7 +35,9 @@ async function Navbar({ date }: { date: string }) {
         prefetch={false}
       >
         <Calendar className="h-6 w-6" />
-        <span className="ml-2 text-lg font-bold">Stockwise News</span>
+        <span className="ml-2 text-lg font-bold line-clamp-1">
+          News - {date}
+        </span>
       </Link>
       <nav className="ml-auto flex gap-4 sm:gap-6">
         <Link
@@ -95,7 +97,7 @@ async function NextDayButton({ date }: { date: string }) {
   );
 }
 
-export default async function NewsPage({
+export default async function DateNewsPage({
   params,
 }: {
   params: { date: string };
@@ -132,6 +134,7 @@ export default async function NewsPage({
                     ? []
                     : (news.analyze as any as Analyze).forecasts
                 }
+                refer={undefined}
               />
             ))}
           </div>

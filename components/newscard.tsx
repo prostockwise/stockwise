@@ -15,6 +15,7 @@ import { Button } from "@/components/ui/button";
 export default async function NewsCard({
   news,
   forecasts,
+  refer,
 }: {
   news: {
     title: string;
@@ -28,12 +29,19 @@ export default async function NewsCard({
         direction: "positive" | "negative" | "neutral";
       }[]
     | null;
+  refer: string | undefined;
 }) {
   return (
     <Card className="bg-background hover:bg-gray-900 flex flex-col">
       <CardHeader>
         <CardTitle className="hover:underline">
-          <Link href={`/news/detail/${news.inner_url}`} prefetch={false}>
+          <Link
+            href={
+              `/news/detail/${news.inner_url}?` +
+              (refer ? "refer=" + encodeURI(refer) : "")
+            }
+            prefetch={false}
+          >
             {news.title}
           </Link>
         </CardTitle>

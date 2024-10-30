@@ -79,7 +79,7 @@ async function News() {
         <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl mb-8">
           Latest Market News
         </h2>
-        <div className="grid gap-6 lg:grid-cols-3 mb-8">
+        <div className="grid gap-6 grid-cols-1 lg:grid-cols-3 mb-8">
           {newsList.map((news, index) => (
             <NewsCard
               key={index}
@@ -89,6 +89,7 @@ async function News() {
                   ? []
                   : (news.analyze as any as Analyze).forecasts
               }
+              refer={undefined}
             />
           ))}
         </div>

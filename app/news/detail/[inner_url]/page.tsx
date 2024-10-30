@@ -117,12 +117,18 @@ export async function generateMetadata({
   };
 }
 
-async function Navbar({ date }: { date: string }) {
+async function Navbar({
+  date,
+  refer,
+}: {
+  date: string;
+  refer: string | undefined;
+}) {
   return (
     <header className="px-4 lg:px-6 h-14 flex items-center border-b">
       <Link
         className="flex items-center justify-center"
-        href={`/news/${date}`}
+        href={refer ? `/news/${refer}` : `/news/${date}`}
         prefetch={false}
       >
         <ChevronLeft className="h-6 w-6 mr-2" />
@@ -141,10 +147,12 @@ async function Navbar({ date }: { date: string }) {
   );
 }
 
-export default async function NewsDetailPage({
+export default async function DetailNewsPage({
   params,
+  searchParams,
 }: {
   params: { inner_url: string };
+  searchParams: { refer: string | undefined };
 }) {
   // fetch news
   const resp = await fetch(getURL(`/api/news/detail/${params.inner_url}`));
@@ -163,11 +171,10 @@ export default async function NewsDetailPage({
     tweet += ` ${analyze.forecasts.map((f) => "$" + `${f.symbol}`).join(" ")}`;
   }
   tweet += `\n\n${url}`;
-  console.log(tweet);
 
   return (
     <div className="flex flex-col min-h-screen">
-      <Navbar date={news.date} />
+      <Navbar date={news.date} refer={searchParams.refer} />
       <main className="flex-1 py-12 md:py-24 lg:py-32">
         <div className="container px-4 md:px-6">
           <article className="max-w-3xl mx-auto">
@@ -217,8 +224,14 @@ export default async function NewsDetailPage({
                   <Card key={index}>
                     <CardHeader>
                       <CardTitle className="flex items-center justify-between">
-                        <div className="flex items-center space-x-2">
-                          <span>{forecast.symbol}</span>
+                        <div className="flex items-center space-x-3">
+                          <Link
+                            href={`/news/symbol/${forecast.symbol}`}
+                            className="underline"
+                            prefetch={false}
+                          >
+                            {forecast.symbol}
+                          </Link>
                           {/*link to tradingview*/}
                           <Link
                             href={`https://www.tradingview.com/chart/?symbol=${forecast.symbol}`}
@@ -256,6 +269,7 @@ export default async function NewsDetailPage({
                     key={index}
                     news={relatedNews}
                     forecasts={relatedNews.forecasts}
+                    refer={searchParams.refer}
                   />
                 ))}
             </div>
