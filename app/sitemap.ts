@@ -1,7 +1,7 @@
 import { MetadataRoute } from "next";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl: string = "https://www.aimathsolve.com";
+  const baseUrl: string = "https://stockwise.pro";
   const sites: MetadataRoute.Sitemap = [
     {
       url: `${baseUrl}`,
