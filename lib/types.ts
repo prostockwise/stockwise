@@ -13,6 +13,7 @@ export interface RelativeNews {
   description: string;
   inner_url: string;
   published_at: string;
+  date: string;
   forecasts: {
     symbol: string;
     direction: "positive" | "negative" | "neutral";

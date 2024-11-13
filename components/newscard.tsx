@@ -22,6 +22,7 @@ export default async function NewsCard({
     description: string | null;
     inner_url: string;
     published_at: string | null;
+    date: string;
   };
   forecasts:
     | {
@@ -37,8 +38,8 @@ export default async function NewsCard({
         <CardTitle className="hover:underline">
           <Link
             href={
-              `/news/detail/${news.inner_url}?` +
-              (refer ? "refer=" + encodeURI(refer) : "")
+              `/news/${news.date}/${news.inner_url}` +
+              (refer ? "?refer=" + encodeURI(refer) : "")
             }
             prefetch={false}
           >
