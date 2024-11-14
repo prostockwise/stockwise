@@ -1,8 +1,11 @@
 import {
   AlertTriangle,
   BarChart2,
-  ChevronLeft,
+  CalendarDays,
+  Clock,
   ExternalLink,
+  Home,
+  Newspaper,
   Twitter,
 } from "lucide-react";
 import {
@@ -14,7 +17,7 @@ import {
 } from "@/components/ui/card";
 import Link from "next/link";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { getURL, turnISODateToNature } from "@/lib/utils";
+import { getURL, todayDate, turnISODateToNature } from "@/lib/utils";
 import { Tables } from "@/types_db";
 import { Analyze, RelativeNews } from "@/lib/types";
 import SentimentIcon from "@/components/sentimenticon";
@@ -118,32 +121,60 @@ export async function generateMetadata({
   };
 }
 
-async function Navbar({
-  date,
-  refer,
-}: {
-  date: string;
-  refer: string | undefined;
-}) {
+async function Navbar({ date, symbols }: { date: string; symbols: string[] }) {
+  const today = todayDate();
   return (
-    <header className="px-4 lg:px-6 h-14 flex items-center border-b">
-      <Link
-        className="flex items-center justify-center"
-        href={refer ? `/news/${refer}` : `/news/${date}`}
-        prefetch={false}
-      >
-        <ChevronLeft className="h-6 w-6 mr-2" />
-        <span className="text-lg font-bold">Back to News</span>
-      </Link>
-      <nav className="ml-auto flex gap-4 sm:gap-6">
-        <Link
-          className="text-sm font-medium hover:underline underline-offset-4"
-          href="/"
-          prefetch={false}
-        >
-          Home
-        </Link>
+    <header className="flex flex-col border-b">
+      <nav className="h-14 px-4 lg:px-6 flex items-center justify-between">
+        <div className="flex items-center space-x-2">
+          <Newspaper className="w-6 h-6" />
+          <span className="text-lg font-bold">News</span>
+        </div>
+        <ul className="flex space-x-4 items-center">
+          <Link
+            href={`/news/${today}`}
+            className="flex items-center hover:underline"
+            prefetch={false}
+          >
+            <Clock className="w-4 h-4 mr-1" />
+            <span className="sr-only">Latest News</span>
+            <span className="hidden sm:inline">Latest News</span>
+          </Link>
+          <Link
+            href={`/news/${date}`}
+            className="flex items-center hover:underline"
+            prefetch={false}
+          >
+            <CalendarDays className="w-4 h-4 mr-1" />
+            <span className="sr-only">{date}</span>
+            <span className="hidden sm:inline">{date}</span>
+          </Link>
+          <Link
+            href="/"
+            className="flex items-center hover:underline"
+            prefetch={false}
+          >
+            <Home className="w-4 h-4 mr-1" />
+            <span className="sr-only">Home</span>
+            <span className="hidden sm:inline">Home</span>
+          </Link>
+        </ul>
       </nav>
+      {symbols.length > 0 && (
+        <nav className="bg-gray-800 py-1 px-4 lg:px-6 flex space-x-4 justify-end">
+          <span className="text-sm font-bold">More About:</span>
+          {symbols.map((symbol) => (
+            <Link
+              key={symbol}
+              href={`/news/symbol/${symbol}`}
+              className="text-sm hover:underline"
+              prefetch={false}
+            >
+              {symbol}
+            </Link>
+          ))}
+        </nav>
+      )}
     </header>
   );
 }
@@ -152,7 +183,7 @@ export default async function DetailNewsPage({
   params,
   searchParams,
 }: {
-  params: { data: string; inner_url: string };
+  params: { date: string; inner_url: string };
   searchParams: { refer: string | undefined };
 }) {
   // fetch news
@@ -167,9 +198,11 @@ export default async function DetailNewsPage({
     news.relative_news != null
       ? (news.relative_news as any as RelativeNews[])
       : null;
+  // symbol list
+  const symbols: string[] = analyze?.forecasts?.map((f) => f.symbol) ?? [];
 
   // tweet = title + $symbol in forecast + \n\n + url
-  const url = getURL(`/news/detail/${news.inner_url}`);
+  const url = getURL(`/news/${params.date}/${params.inner_url}`);
   let tweet = news.title;
   if (analyze && analyze.forecasts) {
     tweet += ` ${analyze.forecasts.map((f) => "$" + `${f.symbol}`).join(" ")}`;
@@ -178,7 +211,7 @@ export default async function DetailNewsPage({
 
   return (
     <div className="flex flex-col min-h-screen">
-      <Navbar date={news.date} refer={searchParams.refer} />
+      <Navbar date={news.date} symbols={symbols} />
       <main className="flex-1 py-12 md:py-24 lg:py-32">
         <div className="container px-4 md:px-6">
           <article className="max-w-3xl mx-auto">

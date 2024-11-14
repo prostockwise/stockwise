@@ -1,4 +1,4 @@
-import { Calendar } from "lucide-react";
+import { Calendar, Home, TrendingUp } from "lucide-react";
 import Link from "next/link";
 import { getURL } from "@/lib/utils";
 import { Tables } from "@/types_db";
@@ -31,16 +31,18 @@ async function Navbar({ symbol }: { symbol: string }) {
         href={`/news/symbol/${symbol}`}
         prefetch={false}
       >
-        <Calendar className="h-6 w-6" />
+        <TrendingUp className="h-6 w-6" />
         <span className="ml-2 text-lg font-bold">News - {symbol}</span>
       </Link>
       <nav className="ml-auto flex gap-4 sm:gap-6">
         <Link
-          className="text-sm font-medium hover:underline underline-offset-4"
           href="/"
+          className="flex items-center hover:underline"
           prefetch={false}
         >
-          Home
+          <Home className="w-4 h-4 mr-1" />
+          <span className="sr-only">Home</span>
+          <span className="hidden sm:inline">Home</span>
         </Link>
       </nav>
     </header>

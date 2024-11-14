@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 
-import { Calendar, ChevronLeft, ChevronRight } from "lucide-react";
+import { Calendar, ChevronLeft, ChevronRight, Home } from "lucide-react";
 import Link from "next/link";
 import { getURL, nextDate, prevDate, todayDate } from "@/lib/utils";
 import { Tables } from "@/types_db";
@@ -41,11 +41,13 @@ async function Navbar({ date }: { date: string }) {
       </Link>
       <nav className="ml-auto flex gap-4 sm:gap-6">
         <Link
-          className="text-sm font-medium hover:underline underline-offset-4"
           href="/"
+          className="flex items-center hover:underline"
           prefetch={false}
         >
-          Home
+          <Home className="w-4 h-4 mr-1" />
+          <span className="sr-only">Home</span>
+          <span className="hidden sm:inline">Home</span>
         </Link>
       </nav>
     </header>
