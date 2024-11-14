@@ -13,7 +13,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: "Stockwise | Next-Generation Market Analysis Partner",
     description:
-      "Stockwise: Your AI-powered market analysis partner. Get real-time news updates, advanced stock screening, portfolio building tools, and custom alerts. Make smarter investment decisions with our next-generation platform.",
+      "Next-Generation Market Analysis Partner. Get real-time news updates, advanced stock screening, portfolio building tools, and custom alerts.",
     referrer: "origin-when-cross-origin",
     authors: [{ name: "Hantian Pang", url: "https://github.com/ppaanngggg" }],
     creator: "Hantian Pang",

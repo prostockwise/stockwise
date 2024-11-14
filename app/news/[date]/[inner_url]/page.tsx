@@ -70,12 +70,12 @@ function formatDescriptionWithForecasts(
 export async function generateMetadata({
   params,
 }: {
-  params: { inner_url: string };
+  params: { date: string; inner_url: string };
 }): Promise<Metadata> {
   // fetch news data and parse it
   const resp = await fetch(getURL(`/api/news/detail/${params.inner_url}`));
   const news: Tables<"news"> = await resp.json();
-  const url = getURL(`/news/detail/${params.inner_url}`);
+  const url = getURL(`/news/${params.date}/${params.inner_url}`);
   const title = `${news.title} | Stockwise News`;
   const description = news.description ? news.description : "";
   const analyze: Analyze | null =
@@ -152,7 +152,7 @@ export default async function DetailNewsPage({
   params,
   searchParams,
 }: {
-  params: { inner_url: string };
+  params: { data: string; inner_url: string };
   searchParams: { refer: string | undefined };
 }) {
   // fetch news
