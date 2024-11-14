@@ -11,7 +11,7 @@ const inter = Inter({ subsets: ["latin"] });
 export async function generateMetadata(): Promise<Metadata> {
   const url = getURL();
   return {
-    title: "Stockwise | Next-Generation Market Analysis Partner",
+    title: "Stockwise",
     description:
       "Next-Generation Market Analysis Partner. Get real-time news updates, advanced stock screening, portfolio building tools, and custom alerts.",
     referrer: "origin-when-cross-origin",
