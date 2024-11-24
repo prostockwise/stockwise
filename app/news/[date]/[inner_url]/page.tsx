@@ -6,7 +6,6 @@ import {
   ExternalLink,
   Home,
   Newspaper,
-  Twitter,
 } from "lucide-react";
 import {
   Card,
@@ -24,6 +23,7 @@ import SentimentIcon from "@/components/sentimenticon";
 import NewsCard from "@/components/newscard";
 import { Metadata } from "next";
 import { redirect } from "next/navigation";
+import { ShareTwitterButton } from "@/components/sharetwitterbutton";
 
 function encodeOgParams(
   title: string,
@@ -205,7 +205,6 @@ export default async function DetailNewsPage({
   if (analyze && analyze.forecasts) {
     tweet += ` ${analyze.forecasts.map((f) => "$" + `${f.symbol}`).join(" ")}`;
   }
-  tweet += `\n\n${url}`;
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -233,14 +232,7 @@ export default async function DetailNewsPage({
                 Read full article
                 <ExternalLink className="ml-2 h-4 w-4" />
               </Link>
-              <Link
-                href={`https://x.com/intent/post?text=${encodeURIComponent(tweet)}`}
-                target="_blank"
-                rel="nofollow noopener noreferrer"
-                className="inline-flex items-center text-blue-400"
-              >
-                <Twitter />
-              </Link>
+              <ShareTwitterButton text={tweet} url={url} />
             </div>
           </article>
 
