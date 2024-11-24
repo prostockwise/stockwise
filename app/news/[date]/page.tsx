@@ -136,7 +136,6 @@ export default async function DateNewsPage({
                     ? []
                     : (news.analyze as any as Analyze).forecasts
                 }
-                refer={undefined}
               />
             ))}
           </div>

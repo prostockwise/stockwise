@@ -1,4 +1,4 @@
-import { Calendar, Home, TrendingUp } from "lucide-react";
+import { Home, TrendingUp } from "lucide-react";
 import Link from "next/link";
 import { getURL } from "@/lib/utils";
 import { Tables } from "@/types_db";
@@ -114,7 +114,6 @@ export default async function SymbolNewsPage({
                         ? []
                         : (news.analyze as any as Analyze).forecasts
                     }
-                    refer={`symbol/${params.symbol}`}
                   />
                 ))}
               </div>

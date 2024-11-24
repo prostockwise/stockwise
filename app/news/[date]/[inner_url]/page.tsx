@@ -181,10 +181,8 @@ async function Navbar({ date, symbols }: { date: string; symbols: string[] }) {
 
 export default async function DetailNewsPage({
   params,
-  searchParams,
 }: {
   params: { date: string; inner_url: string };
-  searchParams: { refer: string | undefined };
 }) {
   // fetch news
   const resp = await fetch(getURL(`/api/news/detail/${params.inner_url}`));
@@ -306,7 +304,6 @@ export default async function DetailNewsPage({
                     key={index}
                     news={relatedNews}
                     forecasts={relatedNews.forecasts}
-                    refer={searchParams.refer}
                   />
                 ))}
             </div>

@@ -87,7 +87,6 @@ async function News() {
                   ? []
                   : (news.analyze as any as Analyze).forecasts
               }
-              refer={undefined}
             />
           ))}
         </div>
