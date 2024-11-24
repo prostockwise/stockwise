@@ -4,7 +4,7 @@ import { Twitter } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-export async function ShareTwitterButton({
+export function ShareTwitterButton({
   text,
   url,
 }: {
