@@ -1,16 +1,6 @@
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { ChartBar, Linkedin, Mail, Twitter } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
 import { Metadata } from "next";
 import { getURL } from "@/lib/utils";
+import { CommonNavbar } from "@/components/commonnavbar";
 
 export async function generateMetadata(): Promise<Metadata> {
   const url = getURL("/about");
@@ -24,116 +14,10 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-function Navbar() {
-  return (
-    <header className="px-4 lg:px-6 h-14 flex items-center border-b">
-      <Link
-        className="flex items-center justify-center"
-        href="/"
-        prefetch={false}
-      >
-        <ChartBar className="h-6 w-6" />
-        <span className="ml-2 text-lg font-bold">Stockwise</span>
-      </Link>
-      <nav className="ml-auto flex gap-4 sm:gap-6">
-        <Link
-          className="text-sm font-medium hover:underline underline-offset-4"
-          href="/"
-          prefetch={false}
-        >
-          Home
-        </Link>
-        <Link
-          className="text-sm font-medium hover:underline underline-offset-4"
-          href="/features"
-          prefetch={false}
-        >
-          Features
-        </Link>
-        <Link
-          className="text-sm font-medium hover:underline underline-offset-4"
-          href="/about"
-          prefetch={false}
-        >
-          About
-        </Link>
-        <Link
-          className="text-sm font-medium hover:underline underline-offset-4"
-          href="/contact"
-          prefetch={false}
-        >
-          Contact
-        </Link>
-      </nav>
-    </header>
-  );
-}
-
-function OurTeam() {
-  return (
-    <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-gray-800">
-      <div className="container px-4 md:px-6">
-        <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-center mb-10">
-          Our Team
-        </h2>
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
-          {[
-            {
-              name: "Jane Doe",
-              role: "CEO & Co-founder",
-              image: "/placeholder.svg?height=400&width=400",
-            },
-            {
-              name: "John Smith",
-              role: "CTO & Co-founder",
-              image: "/placeholder.svg?height=400&width=400",
-            },
-            {
-              name: "Emily Johnson",
-              role: "Head of Product",
-              image: "/placeholder.svg?height=400&width=400",
-            },
-          ].map((member, index) => (
-            <Card key={index} className="overflow-hidden">
-              <CardHeader className="p-0">
-                <Image
-                  src={member.image}
-                  alt={member.name}
-                  width={400}
-                  height={400}
-                  className="object-cover w-full h-60"
-                />
-              </CardHeader>
-              <CardContent className="p-6">
-                <CardTitle>{member.name}</CardTitle>
-                <CardDescription>{member.role}</CardDescription>
-                <div className="flex space-x-4 mt-4">
-                  <Button variant="outline" size="icon">
-                    <Mail className="h-4 w-4" />
-                    <span className="sr-only">Email</span>
-                  </Button>
-                  <Button variant="outline" size="icon">
-                    <Linkedin className="h-4 w-4" />
-                    <span className="sr-only">LinkedIn</span>
-                  </Button>
-                  <Button variant="outline" size="icon">
-                    <Twitter className="h-4 w-4" />
-                    <span className="sr-only">Twitter</span>
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
 export default function AboutPage() {
   return (
     <div className="flex flex-col min-h-screen">
-      <Navbar />
+      <CommonNavbar location="About" />
       <main className="flex-1">
         <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48 bg-gray-100 dark:bg-gray-800">
           <div className="container px-4 md:px-6">

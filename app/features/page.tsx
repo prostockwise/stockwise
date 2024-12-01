@@ -19,6 +19,7 @@ import Link from "next/link";
 import { Input } from "@/components/ui/input";
 import { Metadata } from "next";
 import { getURL } from "@/lib/utils";
+import { CommonNavbar } from "@/components/commonnavbar";
 
 export async function generateMetadata(): Promise<Metadata> {
   const url = getURL("/features");
@@ -35,38 +36,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default function FeaturesPage() {
   return (
     <div className="flex flex-col min-h-screen">
-      <header className="px-4 lg:px-6 h-14 flex items-center border-b">
-        <Link className="flex items-center justify-center" href="/">
-          <ChartBar className="h-6 w-6" />
-          <span className="ml-2 text-lg font-bold">Stockwise</span>
-        </Link>
-        <nav className="ml-auto flex gap-4 sm:gap-6">
-          <Link
-            className="text-sm font-medium hover:underline underline-offset-4"
-            href="/"
-          >
-            Home
-          </Link>
-          <Link
-            className="text-sm font-medium hover:underline underline-offset-4"
-            href="/features"
-          >
-            Features
-          </Link>
-          <Link
-            className="text-sm font-medium hover:underline underline-offset-4"
-            href="/about"
-          >
-            About
-          </Link>
-          <Link
-            className="text-sm font-medium hover:underline underline-offset-4"
-            href="/contact"
-          >
-            Contact
-          </Link>
-        </nav>
-      </header>
+      <CommonNavbar location="Features" />
       <main className="flex-1">
         <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48 bg-gray-100 dark:bg-gray-800">
           <div className="container px-4 md:px-6">
@@ -89,16 +59,27 @@ export default function FeaturesPage() {
               <Card>
                 <CardHeader>
                   <Newspaper className="h-10 w-10 mb-2 text-primary" />
-                  <CardTitle>Real-time Market News</CardTitle>
+                  <CardTitle>Market News & Stock Predictions</CardTitle>
                   <CardDescription>
-                    Stay informed with the latest market updates and analysis
+                    Stay ahead with timely market updates and data-driven stock
+                    predictions based on the latest news.
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <ul className="list-disc pl-4 space-y-2">
-                    <li>Comprehensive market analysis</li>
-                    <li>Breaking news alerts</li>
-                    <li>Expert commentary and insights</li>
+                    <li>
+                      Analyze current market news to predict potential movements
+                      in individual stocks and ETFs.
+                    </li>
+                    <li>
+                      Leverage breaking news and expert insights to identify
+                      opportunities in the market.
+                    </li>
+                    <li>
+                      Receive clear explanations of how news events influence
+                      stock behavior and why specific stocks or ETFs are poised
+                      for movement.
+                    </li>
                   </ul>
                 </CardContent>
               </Card>

@@ -7,45 +7,9 @@ import { getURL, todayDate } from "@/lib/utils";
 import { Tables } from "@/types_db";
 import NewsCard from "@/components/newscard";
 import { Analyze } from "@/lib/types";
+import { CommonNavbar } from "@/components/commonnavbar";
 
 export const revalidate = 60;
-
-async function Navbar() {
-  return (
-    <header className="px-4 lg:px-6 h-14 flex items-center">
-      <Link className="flex items-center justify-center" href="/">
-        <ChartBar className="h-6 w-6" />
-        <span className="ml-2 text-lg font-bold">Stockwise</span>
-      </Link>
-      <nav className="ml-auto flex gap-4 sm:gap-6">
-        <Link
-          className="text-sm font-medium hover:underline underline-offset-4"
-          href="/features"
-        >
-          Features
-        </Link>
-        {/*<Link*/}
-        {/*  className="text-sm font-medium hover:underline underline-offset-4"*/}
-        {/*  href="#"*/}
-        {/*>*/}
-        {/*  Pricing*/}
-        {/*</Link>*/}
-        <Link
-          className="text-sm font-medium hover:underline underline-offset-4"
-          href="/about"
-        >
-          About
-        </Link>
-        <Link
-          className="text-sm font-medium hover:underline underline-offset-4"
-          href="/contact"
-        >
-          Contact
-        </Link>
-      </nav>
-    </header>
-  );
-}
 
 async function TitleAndDescription() {
   return (
@@ -179,7 +143,7 @@ async function WishList() {
 export default async function Home() {
   return (
     <div className="min-h-screen flex flex-col">
-      <Navbar />
+      <CommonNavbar />
       <main className="flex-1">
         <TitleAndDescription />
         <News />
