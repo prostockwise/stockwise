@@ -143,7 +143,7 @@ async function WishList() {
 export default async function Home() {
   return (
     <div className="min-h-screen flex flex-col">
-      <CommonNavbar />
+      <CommonNavbar location={null} />
       <main className="flex-1">
         <TitleAndDescription />
         <News />
