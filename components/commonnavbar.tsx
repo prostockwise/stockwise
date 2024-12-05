@@ -33,6 +33,12 @@ export async function CommonNavbar({ location }: { location: string | null }) {
         </Link>
         <Link
           className="text-sm font-medium hover:underline underline-offset-4"
+          href="/apis"
+        >
+          APIs
+        </Link>
+        <Link
+          className="text-sm font-medium hover:underline underline-offset-4"
           href="/about"
         >
           About

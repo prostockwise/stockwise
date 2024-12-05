@@ -10,8 +10,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
     {
       url: `${baseUrl}/features`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
+      lastModified: "2024-12-05",
+      changeFrequency: "weekly",
+    },
+    {
+      url: `${baseUrl}/apis`,
+      lastModified: "2024-12-05",
+      changeFrequency: "weekly",
+    },
+    {
+      url: `${baseUrl}/apis/news-forecast`,
+      lastModified: "2024-12-05",
+      changeFrequency: "weekly",
     },
     // TODO: add news dates
     // TODO: add news details

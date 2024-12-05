@@ -55,7 +55,7 @@ export default function FeaturesPage() {
         </section>
         <section className="w-full py-12 md:py-24 lg:py-32">
           <div className="container px-4 md:px-6">
-            <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-10 grid-cols-1 md:grid-cols-3">
               <Card>
                 <CardHeader>
                   <Newspaper className="h-10 w-10 mb-2 text-primary" />
