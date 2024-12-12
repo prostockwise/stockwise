@@ -3,11 +3,11 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowRight, Bell, ChartBar, Filter } from "lucide-react";
 import Wishlist from "@/components/wishlist";
-import { getURL, todayDate } from "@/lib/utils";
-import { Tables } from "@/types_db";
+import { todayDate } from "@/lib/utils";
 import NewsCard from "@/components/newscard";
 import { Analyze } from "@/lib/types";
 import { CommonNavbar } from "@/components/commonnavbar";
+import { fetchLatestNews } from "@/lib/news";
 
 export const revalidate = 60;
 
@@ -32,8 +32,7 @@ async function TitleAndDescription() {
 }
 
 async function News() {
-  const resp = await fetch(getURL(`/api/news?limit=3`));
-  const newsList: Tables<"news">[] = await resp.json();
+  const newsList = await fetchLatestNews(3);
   const today = todayDate();
   return (
     <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-100 dark:bg-gray-800">

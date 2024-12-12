@@ -3,11 +3,11 @@ import { Button } from "@/components/ui/button";
 import { Calendar, ChevronLeft, ChevronRight, Home } from "lucide-react";
 import Link from "next/link";
 import { getURL, nextDate, prevDate, todayDate } from "@/lib/utils";
-import { Tables } from "@/types_db";
 import { redirect } from "next/navigation";
 import NewsCard from "@/components/newscard";
 import { Analyze } from "@/lib/types";
 import { Metadata } from "next";
+import { fetchDateNews } from "@/lib/news";
 
 export const revalidate = 60;
 
@@ -104,9 +104,7 @@ export default async function DateNewsPage({
 }: {
   params: { date: string };
 }) {
-  // fetch news data
-  const resp = await fetch(getURL(`/api/news/${params.date}`));
-  const newsList: Tables<"news">[] = await resp.json();
+  const newsList = await fetchDateNews(params.date);
 
   return (
     <div className="flex flex-col min-h-screen">
