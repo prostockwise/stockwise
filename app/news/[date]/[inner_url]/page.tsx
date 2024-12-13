@@ -22,8 +22,10 @@ import { Analyze, RelativeNews } from "@/lib/types";
 import SentimentIcon from "@/components/sentimenticon";
 import NewsCard from "@/components/newscard";
 import { Metadata } from "next";
-import { redirect } from "next/navigation";
 import { ShareTwitterButton } from "@/components/sharetwitterbutton";
+import { fetchNewsDetail } from "@/lib/news";
+
+export const revalidate = 86400; // 1 day
 
 function encodeOgParams(
   title: string,
@@ -76,8 +78,7 @@ export async function generateMetadata({
   params: { date: string; inner_url: string };
 }): Promise<Metadata> {
   // fetch news data and parse it
-  const resp = await fetch(getURL(`/api/news/detail/${params.inner_url}`));
-  const news: Tables<"news"> = await resp.json();
+  const news: Tables<"news"> = await fetchNewsDetail(params.inner_url);
   const url = getURL(`/news/${params.date}/${params.inner_url}`);
   const title = `${news.title} | Stockwise News`;
   const description = news.description ? news.description : "";
@@ -185,11 +186,7 @@ export default async function DetailNewsPage({
   params: { date: string; inner_url: string };
 }) {
   // fetch news
-  const resp = await fetch(getURL(`/api/news/detail/${params.inner_url}`));
-  if (!resp.ok) {
-    redirect("/");
-  }
-  const news: Tables<"news"> = await resp.json();
+  const news: Tables<"news"> = await fetchNewsDetail(params.inner_url);
   const analyze: Analyze | null =
     news.analyze != null ? (news.analyze as any as Analyze) : null;
   const relatedNewsList: RelativeNews[] | null =

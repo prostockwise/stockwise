@@ -5,6 +5,7 @@ import { Tables } from "@/types_db";
 import NewsCard from "@/components/newscard";
 import { Analyze } from "@/lib/types";
 import { Metadata } from "next";
+import { fetchSymbolNews } from "@/lib/news";
 
 export const revalidate = 60;
 
@@ -76,8 +77,7 @@ export default async function SymbolNewsPage({
   params: { symbol: string };
 }) {
   // fetch news data
-  const resp = await fetch(getURL(`/api/news/symbol/${params.symbol}`));
-  const newsList: Tables<"news">[] = await resp.json();
+  const newsList = await fetchSymbolNews(params.symbol, 100);
   // group news by date
   const newsByDate = groupNewsByDate(newsList);
 
