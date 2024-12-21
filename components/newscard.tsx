@@ -63,7 +63,7 @@ export default async function NewsCard({
               </Badge>
             ))}
         </div>
-        <Link href={`/news/detail/${news.inner_url}`} prefetch={false}>
+        <Link href={`/news/${news.date}/${news.inner_url}`} prefetch={false}>
           <Button variant="link">Read more</Button>
         </Link>
       </CardFooter>
