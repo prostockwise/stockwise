@@ -19,6 +19,19 @@ import {
 import { CommonNavbar } from "@/components/commonnavbar";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { Metadata } from "next";
+import { getURL } from "@/lib/utils";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const url = getURL("/apis/news-forecast");
+  return {
+    title: "News Forecast API | Stockwise",
+    description: "Explorer Stockwise AI-powered Stock News Forecast API",
+    alternates: {
+      canonical: url,
+    },
+  };
+}
 
 async function ButtonPair() {
   return (
