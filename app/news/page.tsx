@@ -100,7 +100,7 @@ export default async function NewsPage() {
             <div className="mt-4 md:mt-8 flex flex-col gap-4">
               {symbols.map((symbol) => (
                 <Card key={symbol} className="hover:bg-gray-900">
-                  <div className="flex justify-between items-center p-6">
+                  <CardHeader className="flex flex-row justify-between items-center p-6">
                     <CardTitle>
                       <Link
                         href={`/news/symbol/${symbol}`}
@@ -109,16 +109,7 @@ export default async function NewsPage() {
                         {symbol}
                       </Link>
                     </CardTitle>
-                    <div className="flex gap-2">
-                      <Button variant="outline" size="sm" asChild>
-                        <Link
-                          href={`https://finance.yahoo.com/quote/${symbol}`}
-                          target="_blank"
-                          className="flex items-center gap-1"
-                        >
-                          Yahoo Finance
-                        </Link>
-                      </Button>
+                    <CardDescription className="flex gap-2">
                       <Button size="sm" asChild>
                         <Link
                           href={`/news/symbol/${symbol}`}
@@ -127,8 +118,8 @@ export default async function NewsPage() {
                           Read More
                         </Link>
                       </Button>
-                    </div>
-                  </div>
+                    </CardDescription>
+                  </CardHeader>
                   <CardContent>
                     <ul className="space-y-2">
                       {symbolNewsMap[symbol].slice(0, 5).map((news) => (

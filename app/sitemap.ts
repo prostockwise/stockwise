@@ -9,6 +9,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "always",
     },
     {
+      url: `${baseUrl}/news`,
+      lastModified: new Date(),
+      changeFrequency: "always",
+    },
+    {
       url: `${baseUrl}/features`,
       lastModified: "2024-12-05",
       changeFrequency: "weekly",
@@ -23,9 +28,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: "2024-12-05",
       changeFrequency: "weekly",
     },
-    // TODO: add news dates
-    // TODO: add news details
-    // TODO: add news symbols
   ];
   return sites;
 }

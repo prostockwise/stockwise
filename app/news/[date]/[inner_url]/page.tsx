@@ -11,6 +11,7 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -248,37 +249,36 @@ export default async function DetailNewsPage({
                   <Card key={index}>
                     <CardHeader>
                       <CardTitle className="flex items-center justify-between">
-                        <div className="flex items-center space-x-3">
-                          <Link
-                            href={`/news/symbol/${forecast.symbol}`}
-                            className="underline"
-                            prefetch={false}
-                          >
-                            {forecast.symbol}
-                          </Link>
-                          {/*link to tradingview*/}
-                          <Link
-                            href={`https://www.tradingview.com/chart/?symbol=${forecast.symbol}`}
-                            target="_blank"
-                            rel="nofollow noopener noreferrer"
-                            className="text-blue-500 hover:text-blue-600 transition-colors"
-                          >
-                            <BarChart2 className="h-4 w-4" />
-                            <span className="sr-only">
-                              View {forecast.symbol} chart on TradingView
-                            </span>
-                          </Link>
-                        </div>
+                        <Link
+                          href={`/news/symbol/${forecast.symbol}`}
+                          className="underline"
+                          prefetch={false}
+                        >
+                          {forecast.symbol}
+                        </Link>
                         {SentimentIcon(forecast.direction)}
                       </CardTitle>
-                      <CardDescription>
-                        {forecast.direction.charAt(0).toUpperCase() +
-                          forecast.direction.slice(1)}
+                      <CardDescription className="flex items-center justify-between">
+                        <span>
+                          {forecast.direction.charAt(0).toUpperCase() +
+                            forecast.direction.slice(1)}
+                        </span>
                       </CardDescription>
                     </CardHeader>
                     <CardContent>
                       <p>{forecast.analyze}</p>
                     </CardContent>
+                    <CardFooter>
+                      <Link
+                        href={`https://finance.yahoo.com/quote/${forecast.symbol}`}
+                        className="text-sm text-blue-500 hover:underline flex items-center justify-end"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        prefetch={false}
+                      >
+                        View {symbols} on Yahoo Finance ↗
+                      </Link>
+                    </CardFooter>
                   </Card>
                 ))}
             </div>
