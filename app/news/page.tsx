@@ -52,18 +52,11 @@ export default async function NewsPage() {
       <CommonNavbar location="News" />
       <main className="flex-1">
         <section className="w-full py-12 md:py-16 lg:py-20 xl:py-24 bg-gray-100 dark:bg-gray-800">
-          <div className="container px-4 md:px-6">
-            <div className="flex flex-col items-center space-y-4 text-center">
-              <div className="space-y-2">
-                <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl">
-                  Stockwise News
-                </h1>
-                <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl dark:text-gray-400">
-                  Stay up-to-date with the latest stock market news and
-                  insights.
-                </p>
-              </div>
-            </div>
+          <div className="container px-4 text-center">
+            <h1 className="text-3xl font-bold sm:text-4xl">Stockwise News</h1>
+            <p className="mt-2 mx-auto max-w-[700px] text-gray-500 dark:text-gray-400">
+              Stay up-to-date with the latest stock market news and insights.
+            </p>
           </div>
         </section>
         <section className="w-full py-12 md:py-16 lg:py-20 xl:py-24 bg-gray-100 dark:bg-background">

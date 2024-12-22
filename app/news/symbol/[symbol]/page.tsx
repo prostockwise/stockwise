@@ -84,17 +84,28 @@ export default async function SymbolNewsPage({
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar symbol={params.symbol} />
-      <main className="flex-1 py-12 md:py-24 lg:py-32">
-        <div className="container px-4 md:px-6">
-          <div className="flex flex-col items-center space-y-4 text-center mb-12">
-            <h1 className="font-bold tracking-tighter text-3xl sm:text-4xl md:text-5xl lg:text-6xl">
+      <main className="flex-1">
+        <section className="w-full py-12 md:py-16 lg:py-20 xl:py-24 bg-gray-100 dark:bg-gray-800">
+          <div className="container px-4 text-center">
+            <h1 className="text-3xl font-bold sm:text-4xl">
               {params.symbol} News Explorer
             </h1>
-            <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl dark:text-gray-400">
+            <p className="mt-3 mx-auto max-w-[700px] text-gray-500 dark:text-gray-400">
               Stay informed with the latest market news and analysis about{" "}
               {params.symbol}
             </p>
+            <Link
+              href={`https://finance.yahoo.com/quote/${params.symbol}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-2 inline-block text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline"
+              prefetch={false}
+            >
+              View {params.symbol} on Yahoo Finance →
+            </Link>
           </div>
+        </section>
+        <div className="container px-4 md:px-6">
           {newsByDate.map((dateAndNews) => (
             <div
               key={dateAndNews.date}
