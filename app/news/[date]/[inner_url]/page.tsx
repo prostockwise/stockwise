@@ -1,6 +1,5 @@
 import {
   AlertTriangle,
-  BarChart2,
   CalendarDays,
   Clock,
   ExternalLink,
@@ -208,8 +207,8 @@ export default async function DetailNewsPage({
     <div className="flex flex-col min-h-screen">
       <Navbar date={news.date} symbols={symbols} />
       <main className="flex-1 py-12 md:py-24 lg:py-32">
-        <div className="container px-4 md:px-6">
-          <article className="max-w-3xl mx-auto">
+        <article className="container px-4 md:px-6">
+          <section className="max-w-3xl mx-auto">
             <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl mb-4">
               {news.title}
             </h1>
@@ -232,7 +231,7 @@ export default async function DetailNewsPage({
               </Link>
               <ShareTwitterButton text={tweet} url={url} />
             </div>
-          </article>
+          </section>
 
           <section className="max-w-3xl mx-auto mt-12">
             <h2 className="text-2xl font-bold mb-6">Stock Forecasts</h2>
@@ -297,7 +296,7 @@ export default async function DetailNewsPage({
                 ))}
             </div>
           </section>
-        </div>
+        </article>
       </main>
     </div>
   );

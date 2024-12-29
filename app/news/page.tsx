@@ -14,6 +14,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Tables } from "@/types_db";
 
 export const revalidate = 60;
 
@@ -29,9 +30,7 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default async function NewsPage() {
-  const newsList = await fetchLatestNews(100);
-  const today = todayDate();
+function mapNewsToSymbol(newsList: Tables<"news">[]) {
   const symbolNewsMap = newsList.reduce(
     (acc, news) => {
       if (news.symbols) {
@@ -46,7 +45,16 @@ export default async function NewsPage() {
     },
     {} as Record<string, typeof newsList>,
   );
-  const symbols = Object.keys(symbolNewsMap);
+  return Object.entries(symbolNewsMap)
+    .map(([symbol, news]) => ({ symbol, news }))
+    .sort((a, b) => b.news.length - a.news.length)
+    .slice(0, 20);
+}
+
+export default async function NewsPage() {
+  const newsList = await fetchLatestNews(100);
+  const today = todayDate();
+  const symbolsWithNews = mapNewsToSymbol(newsList);
   return (
     <div className="flex flex-col min-h-screen">
       <CommonNavbar location="News" />
@@ -91,7 +99,7 @@ export default async function NewsPage() {
               Top Symbols by News
             </h2>
             <div className="mt-4 md:mt-8 flex flex-col gap-4">
-              {symbols.map((symbol) => (
+              {symbolsWithNews.map(({ symbol, news }) => (
                 <Card key={symbol} className="hover:bg-gray-900">
                   <CardHeader className="flex flex-row justify-between items-center p-6">
                     <CardTitle>
@@ -115,14 +123,14 @@ export default async function NewsPage() {
                   </CardHeader>
                   <CardContent>
                     <ul className="space-y-2">
-                      {symbolNewsMap[symbol].slice(0, 5).map((news) => (
-                        <li key={news.id}>
+                      {news.slice(0, 5).map((n) => (
+                        <li key={n.id}>
                           <Link
                             className="underline"
-                            href={`/news/${news.date}/${news.inner_url}`}
+                            href={`/news/${n.date}/${n.inner_url}`}
                             prefetch={false}
                           >
-                            {news.title}
+                            {n.title}
                           </Link>
                         </li>
                       ))}

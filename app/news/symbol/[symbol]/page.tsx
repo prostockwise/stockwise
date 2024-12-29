@@ -87,7 +87,7 @@ export default async function SymbolNewsPage({
       <main className="flex-1">
         <section className="w-full py-12 md:py-16 lg:py-20 xl:py-24 bg-gray-100 dark:bg-gray-800">
           <div className="container px-4 text-center">
-            <h1 className="text-3xl font-bold sm:text-4xl">
+            <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl mb-4">
               {params.symbol} News Explorer
             </h1>
             <p className="mt-3 mx-auto max-w-[700px] text-gray-500 dark:text-gray-400">

@@ -109,22 +109,21 @@ export default async function DateNewsPage({
   return (
     <div className="flex flex-col min-h-screen">
       <Navbar date={params.date} />
-      <main className="flex-1 py-12 md:py-24 lg:py-32">
-        <div className="container px-4 md:px-6">
-          <div className="flex flex-col items-center space-y-4 text-center mb-12">
-            <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none">
-              Market News Explorer
+      <main className="flex-1">
+        <section className="w-full py-12 md:py-16 lg:py-20 xl:py-24 bg-gray-100 dark:bg-gray-800">
+          <div className="container px-4 text-center">
+            <h1 className="text-3xl font-bold sm:text-4xl">
+              Daily News Explorer
             </h1>
-            <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl dark:text-gray-400">
-              Stay informed with the latest market news and analysis.
-            </p>
           </div>
+        </section>
+        <div className="container px-4 md:px-6 py-12 md:py-16 lg:py-20 xl:py-24">
           <div className="flex justify-between items-center mb-8">
             <PreviousDayButton date={params.date} />
             <h2 className="text-2xl font-semibold">{params.date}</h2>
             <NextDayButton date={params.date} />
           </div>
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
             {newsList.map((news) => (
               <NewsCard
                 key={news.id}

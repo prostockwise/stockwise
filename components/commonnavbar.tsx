@@ -10,7 +10,7 @@ export async function CommonNavbar({ location }: { location: string | null }) {
           alt="icon"
           width={64}
           height={64}
-          className="w-8 h-8"
+          className="w-8 h-8 hidden sm:block"
         />
         <span className="ml-2 text-lg font-bold">
           {location ?? "Stockwise"}
