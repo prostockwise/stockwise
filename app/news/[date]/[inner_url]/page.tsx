@@ -275,7 +275,7 @@ export default async function DetailNewsPage({
                         rel="noopener noreferrer"
                         prefetch={false}
                       >
-                        View {symbols} on Yahoo Finance ↗
+                        View {forecast.symbol} on Yahoo Finance ↗
                       </Link>
                     </CardFooter>
                   </Card>
